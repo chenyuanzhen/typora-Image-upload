@@ -27,6 +27,8 @@ def generateKey(string):
 
 def uploadAndGetUrl(configJson, filepath):
     q = Auth(configJson['access_key'], configJson['secret_key'])
+
+
     # key = 时间戳 + filename
     key = generateKey(filepath)
 
