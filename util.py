@@ -3,6 +3,32 @@ import base64
 import datetime
 import github
 
+"""
+    commiter: 提交者信息
+    repo_info: 仓库信息
+    files: 需要上传的文件 
+    
+    Example Usage:
+    committer = {
+        "commit_message": update datetime to {str(datetime.datetime.now())}',
+        "access_token": ""
+    }
+
+    repo_info = {
+        "owner": "renaisun",
+        "repo_name": "test",
+        "branch": "customBranch",
+    }
+
+    files = [
+        {
+            "remote_path": "test/a.png",
+            "content": base64.b64encode(open("testupl.png", mode='rb').read())
+        }
+    ]
+    upload_github(committer, repo_info, files)
+"""
+
 
 def upload_github(committer, repo_info, files):
     # using access token
@@ -32,24 +58,26 @@ def upload_github(committer, repo_info, files):
     branch_refs.edit(sha=commit.sha)
 
 
-"""
-Example Usage:
+if __name__ == "__main__":
     committer = {
-        "commit_message": f'update datetime to {str(datetime.datetime.now())}',
-        "access_token": ""
+        "commit_message": "test util github image upload",
+        "access_token": "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"
     }
-    
+
     repo_info = {
-        "owner": "renaisun",
-        "repo_name": "test",
-        "branch": "customBranch",
+        "owner": "chenyuanzhen",
+        "repo_name": "chenyuanzhen.github.io",
+        "branch": "image",
     }
-    
+
     files = [
         {
-            "remote_path": "test/a.png",
-            "content": base64.b64encode(open("testupl.png", mode='rb').read())
-        }
+            "remote_path": "image/a.png",
+            "content": base64.b64encode(open("testImage/test1.png", mode='rb').read())
+        },
+        {
+            "remote_path": "image/b.png",
+            "content": base64.b64encode(open("testImage/test2.png", mode='rb').read())
+         }
     ]
     upload_github(committer, repo_info, files)
-"""

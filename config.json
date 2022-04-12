@@ -1,0 +1,17 @@
+{
+  "qiniu": {
+    "access_key": "",
+    "secret_key": "",
+    "bucket_name": "",
+    "host_name": "",
+    "external_domain_name": "",
+    "mdDir": ""
+  },
+  "github": {
+    "commit_message": "",
+    "access_token": "",
+    "owner": "",
+    "repo_name": "",
+    "branch": ""
+  }
+}

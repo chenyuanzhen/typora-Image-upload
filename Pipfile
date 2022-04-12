@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 qiniu = "*"
+pygithub = "*"
 
 [dev-packages]
 

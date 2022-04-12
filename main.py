@@ -16,6 +16,7 @@ configJsonPath = "./config.json"
     - 若.md文件中的照片找不到会报错imageNotFound, 但不会打断进程
 """
 
+
 # string为文件路径
 def generateKey(string):
     strList = string.split('/')
@@ -25,10 +26,8 @@ def generateKey(string):
     return key
 
 
-def uploadAndGetUrl(configJson, filepath):
+def qiNiuUploadAndGetUrl(configJson, filepath):
     q = Auth(configJson['access_key'], configJson['secret_key'])
-
-
     # key = 时间戳 + filename
     key = generateKey(filepath)
 
@@ -66,7 +65,7 @@ def uploadAndChangeMarkdownPhoto(filePath, configJson, uploadDirName):
                 imagePaths = re.findall(r"!\[.*\]\((.*)\)", line)
                 imagePaths += re.findall(r'<img\s*?src="(.*?)"', line)
                 for path in imagePaths:
-                    downloadUrl = uploadAndGetUrl(configJson, dirPath + path)
+                    downloadUrl = qiNiuUploadAndGetUrl(configJson, dirPath + path)
                     if downloadUrl is not None:
                         line = line.replace(path, downloadUrl)
                 tmp.write(line)
@@ -78,11 +77,9 @@ def getAllMdPath(mdList, dirPath):
     # dirs是目录
     # files是文件
     for root, dirs, files in os.walk(dirPath):
-
         # root 表示当前正在访问的文件夹路径
         # dirs 表示该文件夹下的子目录名list
         # files 表示该文件夹下的文件list
-
         # 遍历文件
         for file in files:
             if re.search(r".*\.md", file) is not None:
@@ -115,4 +112,3 @@ with open(configJsonPath, "r") as f:
         os.mkdir(uploadDirName)
         for mdPath in mdList:
             uploadAndChangeMarkdownPhoto(mdPath, config, uploadDirName + '/')
-
