@@ -1,0 +1,20 @@
+{
+  "type": "github",
+  "md_dir": "/Users/chenyuanzhen/hexo/blog/source/_posts",
+  "qiniu": {
+    "access_key": "",
+    "secret_key": "",
+    "bucket_name": "",
+    "host_name": "",
+    "external_domain_name": ""
+  },
+  "github": {
+    "commit_message": "",
+    "access_token": "",
+    "owner": "",
+    "repo_name": "",
+    "branch": "",
+    "remote_prefix_path": "",
+    "cacheSize": 10
+  }
+}
