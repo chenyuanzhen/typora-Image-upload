@@ -6,15 +6,15 @@
     "secret_key": "",
     "bucket_name": "",
     "host_name": "",
-    "external_domain_name": ""
+    "external_domain_name": "ra4lzizzb.bkt.clouddn.com"
   },
   "github": {
-    "commit_message": "",
+    "commit_message": "python upload image",
     "access_token": "",
-    "owner": "",
-    "repo_name": "",
-    "branch": "",
-    "remote_prefix_path": "",
-    "cacheSize": 10
+    "owner": "chenyuanzhen",
+    "repo_name": "chenyuanzhen.github.io",
+    "branch": "image",
+    "remote_prefix_path": "image",
+    "cacheSize": 15
   }
 }

@@ -1,8 +1,5 @@
 import json
 
-from qiniu import Auth, put_file, etag
-import qiniu.config
-import time
 import os
 import re
 
