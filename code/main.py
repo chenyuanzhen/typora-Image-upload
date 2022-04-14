@@ -101,7 +101,7 @@ def main():
                 uploadAndChangeMarkdownPhoto(mdPath, uploadDirName, uploader)
             uploader.sendSignal('finish')
         else:
-            print("{} 不存在, 请检查路径是否存在", config["md_dir"])
+            print("{} 不存在, 请检查路径是否存在".format(config["md_dir"]))
 
 
 if __name__ == '__main__':
