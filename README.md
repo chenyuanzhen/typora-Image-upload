@@ -28,6 +28,7 @@
     {
       "type": "github",
        // 脚本会搜索指定目录下所有后缀.md的文件
+       // 若md_dir为文件, 则仅会上传该文件
       "md_dir": "/Users/chenyuanzhen/hexo/blog/source/_posts",
       "qiniu": {
         "access_key": "",
