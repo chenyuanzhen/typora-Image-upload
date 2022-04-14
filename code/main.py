@@ -5,7 +5,7 @@ import re
 
 from Uploader import Uploader
 
-configJsonPath = "./config.json"
+configJsonPath = "./myConfig.json"
 """
     使用方法:
     1. 在config.json中配置七牛云信息和md_dir
@@ -14,7 +14,6 @@ configJsonPath = "./config.json"
     程序会在md_dir目录中创建一个uploadMd文件夹, 并将上传图片的.md文件放在该文件夹中
     - 若.md文件中的照片找不到会报错imageNotFound, 但不会打断进程
 """
-
 
 """
     mdPath: markdown绝对路径
@@ -57,12 +56,12 @@ def getAllMdPath(mdList, dirPath):
             if re.search(r".*\.md", file) is not None:
                 mdList.append(os.path.join(root, file))
 
-        # 遍历所有的文件夹
+        # 遍历所有的文件夹1
         for subDir in dirs:
             getAllMdPath(mdList, subDir)
 
 
-def generateNewDirPath(md_dir):
+def generateNewDir(md_dir):
     uploadDirName = os.path.join(md_dir, "uploadMd")
     suffix = 1
     # 新目录文件夹名字不可用时, 追加数字后缀
@@ -70,6 +69,8 @@ def generateNewDirPath(md_dir):
         while os.path.isdir(os.path.join(md_dir, "uploadMd" + str(suffix))) is True:
             suffix += 1
         uploadDirName = os.path.join(md_dir, "uploadMd" + str(suffix))
+    # 创建一个新目录, 用于放置更新后的md
+    os.mkdir(uploadDirName)
     return uploadDirName
 
 
@@ -80,21 +81,27 @@ def main():
         print("从 {} 加载配置文件, 选定上传图床为: {}".format(configJsonPath, config["type"]))
         uploader = Uploader.getUploader(config)
         # 扫描当前目录下所有后缀.md的文件
-        if os.path.isdir(config["md_dir"]) is False:
-            print("{} 不存在, 请检查目录是否存在", config["md_dir"])
-        else:
-            # C:\Users\86155\Desktop\log.md
+        # 如果是文件名, 那么应该
+        if os.path.isfile(config["md_dir"]) is True:
+            print("{} 检测到是md文件路径, 仅转换该md文件图床路径".format(config["md_dir"]))
+            # 生成新目录文件, 并返回其新目录名字
+            uploadDirName = generateNewDir(os.path.dirname(config["md_dir"]))
+            uploadAndChangeMarkdownPhoto(config["md_dir"], uploadDirName, uploader)
+            uploader.sendSignal('finish')
+
+        elif os.path.isdir(config["md_dir"]) is True:
+            print("{} 检测到是目录, 会将该目录下(包含子目录)所有md文件进行上传与替换".format(config["md_dir"]))
             mdPathList = []
             # 获得目录下所有的后缀.md文件
             getAllMdPath(mdPathList, config["md_dir"])
-            # 生成新目录文件
-            uploadDirName = generateNewDirPath(config["md_dir"])
-            # 创建一个新目录, 用于放置更新后的md
-            os.mkdir(uploadDirName)
+            # 生成新目录文件, 并返回其新目录名字
+            uploadDirName = generateNewDir(config["md_dir"])
             # 检查每一个md文件
             for mdPath in mdPathList:
-                uploadAndChangeMarkdownPhoto(mdPath, uploadDirName + '/', uploader)
+                uploadAndChangeMarkdownPhoto(mdPath, uploadDirName, uploader)
             uploader.sendSignal('finish')
+        else:
+            print("{} 不存在, 请检查路径是否存在", config["md_dir"])
 
 
 if __name__ == '__main__':
