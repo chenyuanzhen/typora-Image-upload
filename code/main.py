@@ -5,7 +5,7 @@ import re
 
 from Uploader import Uploader
 
-configJsonPath = "./myConfig.json"
+configJsonPath = "./config.json"
 """
     使用方法:
     1. 在config.json中配置七牛云信息和md_dir
